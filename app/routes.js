@@ -10,7 +10,8 @@ module.exports = function(app, passport) {
 		res.render('index.ejs', showMessage);
 	});
 
-	app.get('/profile', isLoggedIn, function(req, res) {
+	app.get('/profile', function(req, res) {
+		console.log(req.user);
 		res.render('profile.ejs', {
 			user: req.user
 		});
@@ -23,7 +24,15 @@ module.exports = function(app, passport) {
 	app.get('/sendInvites', function(req, res) {
 		res.render('sendInvites.js');
 	});
-}
+
+	app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar'] }));
+
+	app.get('/auth/google/callback',
+		passport.authenticate('google', {
+			successRedirect: '/profile',
+			failureRedirect: '/'
+		}));
+};
 
 var isLoggedIn = function(req, res, next) {
 	if (req.isAuthenticated()) {

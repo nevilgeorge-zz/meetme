@@ -4,7 +4,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // load user model
 var flash = require('connect-flash'),
-	User = require('..models/user.js'),
+	User = require('../models/user.js'),
 	configAuth = require('./auth.js');
 
 module.exports = function(passport) {
@@ -14,6 +14,7 @@ module.exports = function(passport) {
 		done(null, user.id);
 	});
 
+	// Deserialize user
 	passport.deserializeUser(function(id, done) {
 		User.findById(id, function(err, user) {
 			done(err, user);
