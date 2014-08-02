@@ -10,8 +10,10 @@ module.exports = function(app, passport) {
 		res.render('index.ejs', showMessage);
 	});
 
-	app.get('/homepage', function(req, res) {
-		res.render('homepage.ejs');
+	app.get('/profile', isLoggedIn, function(req, res) {
+		res.render('profile.ejs', {
+			user: req.user
+		});
 	});
 
 	app.get('/scheduleEvent', function(req, res) {
@@ -22,3 +24,10 @@ module.exports = function(app, passport) {
 		res.render('sendInvites.js');
 	});
 }
+
+var isLoggedIn = function(req, res, next) {
+	if (req.isAuthenticated()) {
+		return next();
+	}
+	res.redirect('/');
+};
