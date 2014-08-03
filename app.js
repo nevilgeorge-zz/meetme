@@ -8,7 +8,8 @@ var flash = require('connect-flash'),
 	morgan = require('morgan'),
 	cookieParser = require('cookie-parser'),
 	bodyParser = require('body-parser'),
-	session = require('express-session');
+	session = require('express-session'),
+	fs = require('fs');
 
 // instantiate app
 var app = express();

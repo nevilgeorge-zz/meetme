@@ -2,12 +2,20 @@
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
 	gcal = require('google-calendar'),
+	datejs = require('../node_modules/datejs/date.js'),
 	google_calendar;
 
 // load user model
 var flash = require('connect-flash'),
 	User = require('../models/user.js'),
 	configAuth = require('./auth.js');
+
+// var getSunday = function(currentDate) {
+// 	var date = Date(currentDate),
+// 		currentDay = date.getDay(),
+// 		diff = date.getDate() - currentDay;
+// 		return new Date(date.setDate(diff));
+// }
 
 module.exports = function(passport) {
 
@@ -26,16 +34,25 @@ module.exports = function(passport) {
 	passport.use(new GoogleStrategy({
 		clientID: configAuth.googleAuth.clientID,
 		clientSecret: configAuth.googleAuth.clientSecret,
-		callbackURL: configAuth.googleAuth.callbackURL
+		callbackURL: configAuth.googleAuth.callbackURL,
+		scope: ['profile', 'email', 'https://www.googleapis.com/auth/calendar']
 	},
 	function(token, refreshToken, profile, done) {
 		process.nextTick(function() {
+			var startDate = Date.today().last().sunday();
+			var endDate = Date.today().next().saturday();
+			console.log(Date.today());
+			console.log(startDate);
+			console.log(endDate);
 			google_calendar = new gcal.GoogleCalendar(token);
-			google_calendar.calendarList.list(function(err, calendarList) {
-				for (var i = 0; i < calendarList.length; i++) {
-					console.log(calendarList[i]);
+			google_calendar.events.list(profile.emails[0].value, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
+				if (err) {
+					console.log(err);
+				} else {
+					//console.log(eventList.items[eventList.items.length - 1]);
+					console.log(eventList);
 				}
-			})
+			});
 			User.findOne({ 'google.id': profile.id }, function(err, user) {
 				if (err) {
 					return done(err);
