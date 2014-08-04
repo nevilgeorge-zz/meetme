@@ -41,9 +41,6 @@ module.exports = function(passport) {
 		process.nextTick(function() {
 			var startDate = Date.today().last().sunday();
 			var endDate = Date.today().next().saturday();
-			console.log(Date.today());
-			console.log(startDate);
-			console.log(endDate);
 			google_calendar = new gcal.GoogleCalendar(token);
 			google_calendar.events.list(profile.emails[0].value, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
 				if (err) {

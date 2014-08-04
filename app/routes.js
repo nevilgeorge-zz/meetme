@@ -10,6 +10,14 @@ module.exports = function(app, passport) {
 		res.render('index.ejs', showMessage);
 	});
 
+	app.get('/event', function(req, res) {
+		res.render('event.ejs');
+	});
+
+	app.get('/scheduling', function(req, res) {
+		res.render('scheduling.ejs');
+	});
+
 	app.get('/profile', function(req, res) {
 		//console.log(req.user);
 		res.render('profile.ejs', {

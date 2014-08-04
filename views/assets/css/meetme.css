@@ -1,0 +1,112 @@
+/* import bootstrap */
+
+@import "bootstrap.css";
+
+#inner {
+    width: 15%;
+    margin: 0 auto;
+}
+
+
+#centerbutton {
+    width: 60%%;
+    margin: 0 auto;
+}
+
+.slimspace {
+height: 50px;
+}
+
+.slimwindow {
+  background: rgba(255,255,255,0.85);
+  border-radius: 3px;
+height: 450px;
+  width: 340px;
+}
+
+.navbar-nav {
+  float: none; padding: 10px 15px 10px; color: #777777; text-decoration: none; text-shadow: 0 1px 0 #ffffff;
+}
+
+.navbar-nav {
+    display:table;
+    width:100%;
+    margin: 0;
+}
+.navbar-nav > li {
+    display:table-cell;
+    text-align:center;
+}
+
+.navbar-nav .active {
+font-weight: bold;
+
+
+}
+
+.navbar-nav .inactive {
+
+
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+.form-signin .checkbox {
+  font-weight: normal;
+}
+.form-signin .form-control {
+  position: relative;
+  height: auto;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.fatwindow {
+  background: rgba(255,255,255,0.85);
+  border-radius: 3px;
+height: 50%;
+  width: 80%;
+}
+
+.fatlongwindow {
+  background: rgba(255,255,255,0.85);
+  border-radius: 3px;
+height: 1000px;
+  width: 80%;
+}
+
+.btn-previous {
+  background-color: hsl(0, 0%, 91%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#fcfcfc", endColorstr="#e8e8e8");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#fcfcfc), to(#e8e8e8));
+  background-image: -moz-linear-gradient(top, #fcfcfc, #e8e8e8);
+  background-image: -ms-linear-gradient(top, #fcfcfc, #e8e8e8);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fcfcfc), color-stop(100%, #e8e8e8));
+  background-image: -webkit-linear-gradient(top, #fcfcfc, #e8e8e8);
+  background-image: -o-linear-gradient(top, #fcfcfc, #e8e8e8);
+  background-image: linear-gradient(#fcfcfc, #e8e8e8);
+  border-color: #e8e8e8 #e8e8e8 hsl(0, 0%, 89%);

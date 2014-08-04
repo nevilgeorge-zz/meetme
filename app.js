@@ -19,13 +19,15 @@ mongoose.connect('mongodb://localhost:27017/meetme');
 
 // set up ejs for templating
 app.set('view engine', 'ejs');
+//app.set('views', __dirname + '/views');
+//app.set('assets', __dirname + '/views/assets');
 
 // pass the passport to the file that takes care of authentication
 require('./app/passport.js')(passport);
 
 // include views directory to app
-// app.use('/views', express.static(__dirname + '/views'));
-// app.use('/assets', express.static(__dirname + '/views/assets'));
+app.use('/views', express.static(__dirname + '/views'));
+app.use('/assets', express.static(__dirname + '/views/assets'));
 
 // Set up the app to use modules when needed
 app.use(bodyParser.json());
