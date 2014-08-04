@@ -14,8 +14,8 @@ module.exports = function(app, passport) {
 		res.render('event.ejs');
 	});
 
-	app.get('/scheduling', function(req, res) {
-		res.render('scheduling.ejs');
+	app.get('/schedule', function(req, res) {
+		res.render('schedule.ejs');
 	});
 
 	app.get('/profile', function(req, res) {

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<meta charset="utf-8"> 
+	<title> Meetme </title>
+	<link href="assets/css/meetme.css" rel="stylesheet" type="text/css" />
+	<link href="assets/css/calstyle.css" rel="stylesheet" />
+
+
+
+	<link href='assets/css/fullcalendar.css' rel='stylesheet' />
+	<link href='assets/css/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<style>
+
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+			font-size: 14px;
+		}
+
+		#calendar {
+			width: 900px;
+			margin: 40px auto;
+		}
+
+	</style>
+
+	<body>
+
+	</div>
+
+	<div class="row">
+
+		<div class="container center">
+
+			<div class="navbar">
+				<div class="navbar-inner">
+					<div class="container">
+						<ul class="navbar-nav">
+							<li class="inactive"><a>Event Info</a></li>
+							<li class="active"><a>Scheduling</a></li>
+							<li class="inactive"><a>Send Event</a></li>
+						</ul>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<div class="slimspace">
+
+	</div>
+
+	<div class="fatlongwindow center">
+
+
+
+		<div class="span12 center">
+
+			<h1>Meetme!</h1>
+
+			<div class="row">
+
+
+				<div class="span12">
+
+					<div id='calendar'></div>
+
+					<div class="control-group">
+						<div class="controls" align="right">
+							<a href="/event" id="singlebutton" name="singlebutton" class="btn .btn-previous">Previous</a>
+							<a href="/" id="singlebutton" name="singlebutton" class="btn btn-primary">Continue</a>
+						</div>
+					</div>
+
+				</div>
+
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!-- if you remove these nevil it works -->
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="assets/js/script.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="assets/js/bootstrap.js"></script>
+	<script src='assets/js/lib/moment.min.js'></script>
+	<script src='assets/js/lib/jquery.min.js'></script>
+	<script src='assets/js/lib/jquery-ui.custom.min.js'></script>
+	<script src='assets/js/fullcalendar.min.js'></script>
+	<script>
+
+	$(document).ready(function() {
+		
+		$('#calendar').fullCalendar({
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,basicWeek,basicDay'
+			},
+			defaultDate: '2014-06-12',
+			editable: true,
+			events: [
+			{
+				title: 'All Day Event',
+				start: '2014-06-01'
+			},
+			{
+				title: 'Long Event',
+				start: '2014-06-07',
+				end: '2014-06-10'
+			},
+			{
+				id: 999,
+				title: 'Repeating Event',
+				start: '2014-06-09T16:00:00'
+			},
+			{
+				id: 999,
+				title: 'Repeating Event',
+				start: '2014-06-16T16:00:00'
+			},
+			{
+				title: 'Meeting',
+				start: '2014-06-12T10:30:00',
+				end: '2014-06-12T12:30:00'
+			},
+			{
+				title: 'Lunch',
+				start: '2014-06-12T12:00:00'
+			},
+			{
+				title: 'Birthday Party',
+				start: '2014-06-13T07:00:00'
+			},
+			{
+				title: 'Click for Google',
+				url: 'http://google.com/',
+				start: '2014-06-28'
+			}
+			]
+		});
+		
+	});
+
+	</script>
+	<!-- if you remove these nevil it works -->
+
+
+</body>
+
+</html>
+
