@@ -18,6 +18,10 @@ module.exports = function(app, passport) {
 		res.render('schedule.ejs');
 	});
 
+	app.get('/sendEvent', function(req, res) {
+		res.render('sendEvent.ejs');
+	});
+
 	app.get('/profile', function(req, res) {
 		//console.log(req.user);
 		res.render('profile.ejs', {
