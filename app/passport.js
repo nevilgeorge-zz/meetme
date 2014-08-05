@@ -42,15 +42,15 @@ module.exports = function(passport) {
 		process.nextTick(function() {
 			var startDate = Date.today().last().sunday();
 			var endDate = Date.today().next().saturday();
-			google_calendar = new gcal.GoogleCalendar(token);
-			google_calendar.events.list(profile.emails[0].value, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
-				if (err) {
-					console.log(err);
-				} else {
-					//console.log(eventList.items[eventList.items.length - 1]);
-					console.log(eventList);
-				}
-			});
+			// google_calendar = new gcal.GoogleCalendar(token);
+			// google_calendar.events.list(profile.emails[0].value, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
+			// 	if (err) {
+			// 		console.log(err);
+			// 	} else {
+			// 		//console.log(eventList.items[eventList.items.length - 1]);
+			// 		console.log(eventList);
+			// 	}
+			// });
 			User.findOne({ 'google.id': profile.id }, function(err, user) {
 				if (err) {
 					return done(err);

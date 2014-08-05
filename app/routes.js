@@ -1,6 +1,9 @@
 var Event = require('../models/event.js'),
+	User = require('../models/user.js'),
 	uuid = require('node-uuid'),
-	datejs = require('../node_modules/datejs/date.js');
+	datejs = require('../node_modules/datejs/date.js'),
+	gcal = require('google-calendar'),
+	google_cal;
 
 // aggregate all of the apps routes to one file
 
@@ -19,8 +22,7 @@ module.exports = function(app, passport) {
 	});
 
 	app.post('/event', function(req, res) {
-		console.log(req.body);
-		//console.log(req.user);
+
 		var newEvent = new Event();
 		newEvent.uuid = uuid.v1();
 		newEvent.title = req.body.title;
@@ -47,21 +49,37 @@ module.exports = function(app, passport) {
 				break;
 		}
 
+		// Add user to event's array of users - EVENT CAN HAVE MANY USERS
 		newEvent.users.push(req.user);
-		//req.user.events.push(newEvent);
+
 		newEvent.save(function(err) {
 			if (err) {
 				throw err;
 			} else {
 				//res.render('schedule.ejs', { thisEvent: newEvent });
+				//res.redirect('/schedule');
+				// Add event to user's array of events - USER CAN HAVE MANY EVENTS
+				User.findOne({ 'google.id': req.user.google.id }, function(err, user) {
+					if (err) {
+						throw err;
+					} else {
+						user.google.events.push(newEvent);
+					}
+				});
 				res.redirect('/schedule');
 			}
 		});
 	});
 
 	app.get('/schedule', function(req, res) {
-		console.log(req.user);
-		console.log(req.body);
+		Event.findOne({'users' : [req.user]}, function(err, thisEvent) {
+			if (err) {
+				throw err;
+			} else {
+				console.log(thisEvent);
+			}
+		});
+		
 		res.render('schedule.ejs');
 	});
 
