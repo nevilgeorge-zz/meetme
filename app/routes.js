@@ -3,7 +3,7 @@ var Event = require('../models/event.js'),
 	uuid = require('node-uuid'),
 	datejs = require('../node_modules/datejs/date.js'),
 	gcal = require('google-calendar'),
-	google_cal;
+	google_calendar;
 
 // aggregate all of the apps routes to one file
 
@@ -64,9 +64,15 @@ module.exports = function(app, passport) {
 						throw err;
 					} else {
 						user.google.events.push(newEvent);
+						user.save(function(err) {
+							if (err) {
+								throw err;
+							} else {
+								res.redirect('/schedule');
+							}
+						})
 					}
 				});
-				res.redirect('/schedule');
 			}
 		});
 	});
@@ -77,7 +83,17 @@ module.exports = function(app, passport) {
 				throw err;
 			} else {
 				console.log(thisEvent);
+				console.log(req.user);
 			}
+			// 	google_calendar = new gcal.GoogleCalendar(req.user.google.token);
+			// 	google_calendar.events.list(profile.emails[0].value, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
+			// 		if (err) {
+			// 			console.log(err);
+			// 		} else {
+			// 		console.log(eventList);
+			// 	}
+			// });
+			// }
 		});
 		
 		res.render('schedule.ejs');
@@ -87,12 +103,6 @@ module.exports = function(app, passport) {
 		res.render('sendEvent.ejs');
 	});
 
-	app.get('/profile', function(req, res) {
-		//console.log(req.user);
-		res.render('profile.ejs', {
-			user: req.user
-		});
-	});
 
 	app.get('/scheduleEvent', function(req, res) {
 		res.render('scheduleEvent.ejs');

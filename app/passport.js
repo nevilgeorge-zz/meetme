@@ -40,17 +40,6 @@ module.exports = function(passport) {
 	},
 	function(token, refreshToken, profile, done) {
 		process.nextTick(function() {
-			var startDate = Date.today().last().sunday();
-			var endDate = Date.today().next().saturday();
-			// google_calendar = new gcal.GoogleCalendar(token);
-			// google_calendar.events.list(profile.emails[0].value, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
-			// 	if (err) {
-			// 		console.log(err);
-			// 	} else {
-			// 		//console.log(eventList.items[eventList.items.length - 1]);
-			// 		console.log(eventList);
-			// 	}
-			// });
 			User.findOne({ 'google.id': profile.id }, function(err, user) {
 				if (err) {
 					return done(err);
@@ -68,6 +57,7 @@ module.exports = function(passport) {
 					newUser.google.email = profile.emails[0].value;
 					newUser.google.calendar = google_calendar;
 					newUser.google.uuid = uuid.v1();
+					newUser.google.events = [];
 
 					// save the new user to database
 					newUser.save(function(err) {
