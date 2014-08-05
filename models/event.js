@@ -5,7 +5,7 @@ var eventSchema = mongoose.Schema({
 	uuid: String,
 	title: String,
 	location: String,
-	description, String,
+	description: String,
 	startDate: Date,
 	endDate: Date,
 	duration: Number,

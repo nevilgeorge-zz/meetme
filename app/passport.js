@@ -3,6 +3,7 @@
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
 	gcal = require('google-calendar'),
 	datejs = require('../node_modules/datejs/date.js'),
+	uuid = require('node-uuid'),
 	google_calendar;
 
 // load user model
@@ -65,7 +66,8 @@ module.exports = function(passport) {
 					newUser.google.refreshToken = refreshToken;
 					newUser.google.name = profile.displayName;
 					newUser.google.email = profile.emails[0].value;
-					newUser.calendar = google_calendar;
+					newUser.google.calendar = google_calendar;
+					newUser.google.uuid = uuid.v1();
 
 					// save the new user to database
 					newUser.save(function(err) {
