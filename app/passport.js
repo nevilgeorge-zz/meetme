@@ -1,10 +1,8 @@
 // Take care of authorization - app/passport.js
 
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,
-	gcal = require('google-calendar'),
 	datejs = require('../node_modules/datejs/date.js'),
-	uuid = require('node-uuid'),
-	google_calendar;
+	uuid = require('node-uuid');
 
 // load user model
 var flash = require('connect-flash'),
@@ -55,7 +53,6 @@ module.exports = function(passport) {
 					newUser.google.refreshToken = refreshToken;
 					newUser.google.name = profile.displayName;
 					newUser.google.email = profile.emails[0].value;
-					newUser.google.calendar = google_calendar;
 					newUser.google.uuid = uuid.v1();
 					newUser.google.events = [];
 

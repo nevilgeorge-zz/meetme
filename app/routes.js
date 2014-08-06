@@ -33,31 +33,28 @@ module.exports = function(app, passport) {
 
 		switch (req.body.happenWithin) {
 			case 'Next day':
-				newEvent.endDate = Date.today().add({ days: 1 });
+				newEvent.endDate = Date.today().addDays(1);
 				break;
 
 			case 'Next 2 days':
-				newEvent.endDate = Date.today().add({ days: 2 });
+				newEvent.endDate = Date.today().addDays(2);
 				break;
 
 			case 'Next week':
-				newEvent.endDate = Date.today().add({ weeks: 1 });
+				newEvent.endDate = Date.today().addWeeks(1);
 				break;
 
 			case 'Next 2 weeks':
-				newEvent.endDate = Date.today().add({ weeks: 2 });
+				newEvent.endDate = Date.today().addWeeks(2);
 				break;
 		}
 
 		// Add user to event's array of users - EVENT CAN HAVE MANY USERS
 		newEvent.users.push(req.user);
-
 		newEvent.save(function(err) {
 			if (err) {
 				throw err;
 			} else {
-				//res.render('schedule.ejs', { thisEvent: newEvent });
-				//res.redirect('/schedule');
 				// Add event to user's array of events - USER CAN HAVE MANY EVENTS
 				User.findOne({ 'google.id': req.user.google.id }, function(err, user) {
 					if (err) {
@@ -68,7 +65,7 @@ module.exports = function(app, passport) {
 							if (err) {
 								throw err;
 							} else {
-								res.redirect('/schedule');
+								res.redirect('/schedule/' + newEvent.uuid);
 							}
 						})
 					}
@@ -77,24 +74,36 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.get('/schedule', function(req, res) {
-		Event.findOne({'users' : [req.user]}, function(err, thisEvent) {
+	app.param('thisEvent', function(req, res, next, uuid) {
+		Event.findOne({'uuid' : uuid}, function(err, user) {
 			if (err) {
-				throw err;
+				next(err);
+			} else if (user) {
+				next();
 			} else {
-				console.log(thisEvent);
-				console.log(req.user);
+				next(new Error('failed to load event'));
 			}
-			// 	google_calendar = new gcal.GoogleCalendar(req.user.google.token);
-			// 	google_calendar.events.list(profile.emails[0].value, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
-			// 		if (err) {
-			// 			console.log(err);
-			// 		} else {
-			// 		console.log(eventList);
-			// 	}
-			// });
-			// }
 		});
+	});
+
+	app.get('/schedule/:uuid', function(req, res) {
+		// Event.findOne({'users' : [req.user]}, function(err, thisEvent) {
+		// 	if (err) {
+		// 		throw err;
+		// 	} else {
+		// 		console.log(req.user);
+		// 	}
+		// });
+		console.log(req.params);
+		console.log(req.body.thisEvent);
+		// google_calendar = new gcal.GoogleCalendar(req.user.google.token);
+		// google_calendar.events.list(req.user.google.email, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
+		// 	if (err) {
+		// 		throw err;
+		// 	} else {
+		// 		console.log(eventList);
+		// 	}
+		// });
 		
 		res.render('schedule.ejs');
 	});
