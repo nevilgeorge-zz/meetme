@@ -74,36 +74,38 @@ module.exports = function(app, passport) {
 		});
 	});
 
-	app.param('thisEvent', function(req, res, next, uuid) {
-		Event.findOne({'uuid' : uuid}, function(err, user) {
-			if (err) {
-				next(err);
-			} else if (user) {
-				next();
-			} else {
-				next(new Error('failed to load event'));
-			}
-		});
-	});
+	// app.param not required in this case because we don't really need any logic.
+	// app.param('thisEvent', function(req, res, next, uuid) {
+	// 	console.log(uuid);
+	// 	Event.findOne({'uuid' : uuid}, function(err, thisEvent) {
+	// 		if (err) {
+	// 			next(err);
+	// 		} else if (thisEvent) {
+	// 			console.log(thisEvent);
+	// 			next();
+	// 		} else {
+	// 			next(new Error('failed to load event'));
+	// 		}
+	// 	});
+	// });
 
 	app.get('/schedule/:uuid', function(req, res) {
-		// Event.findOne({'users' : [req.user]}, function(err, thisEvent) {
-		// 	if (err) {
-		// 		throw err;
-		// 	} else {
-		// 		console.log(req.user);
-		// 	}
-		// });
-		console.log(req.params);
-		console.log(req.body.thisEvent);
-		// google_calendar = new gcal.GoogleCalendar(req.user.google.token);
-		// google_calendar.events.list(req.user.google.email, { 'timeMin': startDate.toISOString(), 'timeMax': endDate.toISOString() }, function(err, eventList) {
-		// 	if (err) {
-		// 		throw err;
-		// 	} else {
-		// 		console.log(eventList);
-		// 	}
-		// });
+		Event.findOne({ 'uuid' : req.params.uuid }, function(err, thisEvent) {
+			if (err) {
+				throw err;
+			} else {
+				//console.log(thisEvent);
+				google_calendar = new gcal.GoogleCalendar(req.user.google.token);
+				google_calendar.events.list(req.user.google.email, { 'timeMin': thisEvent.startDate.toISOString(), 'timeMax': thisEvent.endDate.toISOString() }, function(err, eventList) {
+					if (err) {
+						throw err;
+					} else {
+						console.log(eventList);
+					}
+				});
+			}
+		});
+		
 		
 		res.render('schedule.ejs');
 	});
