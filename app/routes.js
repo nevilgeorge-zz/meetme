@@ -75,19 +75,19 @@ module.exports = function(app, passport) {
 	});
 
 	// app.param not required in this case because we don't really need any logic when event is found.
-	// app.param('thisEvent', function(req, res, next, uuid) {
-	// 	console.log(uuid);
-	// 	Event.findOne({'uuid' : uuid}, function(err, thisEvent) {
-	// 		if (err) {
-	// 			next(err);
-	// 		} else if (thisEvent) {
-	// 			console.log(thisEvent);
-	// 			next();
-	// 		} else {
-	// 			next(new Error('failed to load event'));
-	// 		}
-	// 	});
-	// });
+	app.param('thisEvent', function(req, res, next, uuid) {
+		console.log(uuid);
+		Event.findOne({'uuid' : uuid}, function(err, thisEvent) {
+			if (err) {
+				next(err);
+			} else if (thisEvent) {
+				console.log(thisEvent);
+				next();
+			} else {
+				next(new Error('failed to load event'));
+			}
+		});
+	});
 
 	app.get('/schedule/:uuid', function(req, res) {
 		Event.findOne({ 'uuid' : req.params.uuid }, function(err, thisEvent) {
